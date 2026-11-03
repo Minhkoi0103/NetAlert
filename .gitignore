@@ -1,0 +1,28 @@
+# Local secrets and machine-specific configuration
+.leader_ket/
+docs/Members.md
+.env
+.env.*
+!.env.example
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Frontend
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+
+# Runtime output
+*.log
+*.db
+.DS_Store
+Thumbs.db

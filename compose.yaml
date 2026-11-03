@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-netalert}
+      POSTGRES_USER: ${POSTGRES_USER:-netalert}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-netalert_local_dev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-netalert}:${POSTGRES_PASSWORD:-netalert_local_dev}@db:5432/${POSTGRES_DB:-netalert}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_PROXY_TARGET: http://api:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
